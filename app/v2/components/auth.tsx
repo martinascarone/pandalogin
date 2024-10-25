@@ -73,7 +73,7 @@ const AuthComp = () => {
                   name="email"
                   id="email"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5 "
-                  placeholder="••••••••"
+                  placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required={false}
@@ -85,7 +85,7 @@ const AuthComp = () => {
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="Username"
+                  placeholder="••••••••"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -96,7 +96,7 @@ const AuthComp = () => {
                   href="#"
                   className="text-sm font-medium text-gray-500 hover:underline"
                 >
-                  Forgot passsword!
+                  Forgot password!
                 </a>
               </div>
               <div className="flex flex-row justify-end mt-20">
@@ -105,7 +105,7 @@ const AuthComp = () => {
                   className="flex flex-row w-fit items-center content-center"
                   onClick={handleSubmit}
                 >
-                  <h2 className="text-xl w-40 font-bold">Siign in</h2>
+                  <h2 className="text-xl w-40 font-bold">Sign in</h2>
                   <div
                     className="w-full text-white 
                         bg-gradient-to-r from-teal-400 to-teal-900  
@@ -116,7 +116,7 @@ const AuthComp = () => {
                 </button>
               </div>
               <p className="text-sm font-light text-gray-500 mb-50">
-                Dont you habe an acount?{" "}
+                Dont you have an account?{" "}
                 <a
                   href="#"
                   className="font-medium text-primary-600 hover:underline"

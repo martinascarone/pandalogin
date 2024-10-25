@@ -43,7 +43,7 @@ const AuthComp = () => {
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <div className="flex flex-col justify-center m-auto items-center mb-10">
               <Image src={"/logo.png"} alt="logo" height={400} width={100} />
-              <h1 className="text-lg text-gray-900">Sign in to your accout</h1>
+              <h1 className="text-lg text-gray-900">Sign in to your account</h1>
             </div>
             <form className="space-y-4 md:space-y-6">
               <div className="flex flex-row shadow-xl items-center p-2 rounded-full">
@@ -52,7 +52,7 @@ const AuthComp = () => {
                   name="email"
                   id="email"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5 "
-                  placeholder="••••••••"
+                  placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required={false}
@@ -64,7 +64,7 @@ const AuthComp = () => {
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="Username"
+                  placeholder="•••••••"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
