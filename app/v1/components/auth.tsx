@@ -52,7 +52,7 @@ const AuthComp = () => {
                   name="email"
                   id="email"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5 "
-                  placeholder="Username"
+                  placeholder="•••••••"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required={false}
@@ -64,7 +64,7 @@ const AuthComp = () => {
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="•••••••"
+                  placeholder="Username"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
