@@ -1,0 +1,8 @@
+"use client"
+import AuthComp from "@/app/v2/components/auth";
+
+export default function Home() {
+  return (
+    <AuthComp></AuthComp>
+  );
+}

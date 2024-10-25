@@ -1,8 +1,19 @@
 "use client"
-import AuthComp from "@/components/auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default function Home() {
-  return (
-    <AuthComp></AuthComp>
-  );
-}
+const MainPage = ( )=>{
+
+
+    const router = useRouter()
+    useEffect(() => {
+       router.push('/v2')
+    }, []);
+    return (
+        <div>
+
+        </div>
+    )
+} 
+
+export default MainPage;
