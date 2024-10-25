@@ -1,0 +1,1 @@
+tuve un par de problemas a la hora de implementarlo pero estoy leyendo y viendo cosas para ir mejorando en la utilizacion de nextjs :(
