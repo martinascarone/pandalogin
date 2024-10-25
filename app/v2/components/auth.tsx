@@ -4,6 +4,7 @@ import { UserIcon } from "@heroicons/react/20/solid";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -117,12 +118,12 @@ const AuthComp = () => {
               </div>
               <p className="text-sm font-light text-gray-500 mb-50">
                 Dont you have an account?{" "}
-                <a
-                  href="#"
+                <Link
+                  href="/v2/create"
                   className="font-medium text-primary-600 hover:underline"
                 >
                   Create
-                </a>
+                </Link>
               </p>
             </form>
           </div>
