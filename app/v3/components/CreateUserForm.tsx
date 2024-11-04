@@ -1,23 +1,52 @@
 "use client";
-import Users from "@/utils/users";
 import { UserIcon } from "@heroicons/react/20/solid";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
+import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const AuthComp = () => {
-  const users = Users;
+const CreateUserForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const router = useRouter();
-  const handleSubmit = () => {
-    const user = users.find((user) => user.username === username);
-    if (user && user.password === password) {
-      router.push("/v1/dashboard");
+  const handleSubmit = async () => {
+    
+    if (username && password && email) {
+        try {
+            const resp = await fetch("/v3/api/create-user", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password, email }),
+              });
+            resp.json().then((data: {
+                    acknowledged: boolean;
+                    insertedId: string;
+                  }
+            ) => {
+                console.log(data);
+                if (data?.insertedId) {
+                    alert("User created successfully");
+                    router.push("/v3");
+                } else {
+                    alert("Login failed");
+                }
+            }).catch((error) => {
+                console.error("An error occurred while creating the user", error);
+            });
+
+        } catch (error) {
+            console.error("An error occurred while creating the user", error);
+        }
     } else {
-      alert("Login failed");
+        console.log("handleSubmit");
+        console.log("username", username);
+        console.log("password,", password);
+        console.log("email", email);
     }
   };
 
@@ -43,16 +72,16 @@ const AuthComp = () => {
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <div className="flex flex-col justify-center m-auto items-center mb-10">
               <Image src={"/logo.png"} alt="logo" height={400} width={100} />
-              <h1 className="text-lg text-gray-900">Sign in to your account</h1>
+              <h1 className="text-lg text-gray-900">Create accout</h1>
             </div>
             <form className="space-y-4 md:space-y-6">
               <div className="flex flex-row shadow-xl items-center p-2 rounded-full">
                 <UserIcon className="h-8 text-gray-500 ml-2"></UserIcon>
                 <input
-                  name="email"
-                  id="email"
+                  name="username"
+                  id="username"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5 "
-                  placeholder="•••••••"
+                  placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required={false}
@@ -70,21 +99,27 @@ const AuthComp = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 ></input>
               </div>
-              <div className="flex items-center justify-end">
-                <a
-                  href="#"
-                  className="text-sm font-medium text-gray-500 hover:underline"
-                >
-                  Forgot passsword!
-                </a>
+
+              <div className="flex flex-row shadow-xl items-center p-2 rounded-full">
+                <EnvelopeIcon className="h-8 text-gray-500 ml-2"></EnvelopeIcon>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  className="bg-white text-gray-900 outline-none block w-full p-2.5"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                ></input>
               </div>
+
               <div className="flex flex-row justify-end mt-20">
                 <button
                   type="button"
                   className="flex flex-row w-fit items-center content-center"
                   onClick={handleSubmit}
                 >
-                  <h2 className="text-xl w-40 font-bold">Siign in</h2>
+                  <h2 className="text-xl w-40 font-bold">Create</h2>
                   <div
                     className="w-full text-white 
                         bg-gradient-to-r from-teal-400 to-teal-900  
@@ -94,20 +129,14 @@ const AuthComp = () => {
                   </div>
                 </button>
               </div>
-              <p className="text-sm font-light text-gray-500 mb-50">
-                Dont you habe an acount?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline"
-                >
-                  Create
-                </a>
-              </p>
             </form>
           </div>
         </div>
       </div>
+      <div className="fixed top-0 right-0">
+        VERSION 3
+        </div>
     </div>
   );
 };
-export default AuthComp;
+export default CreateUserForm;

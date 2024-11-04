@@ -1,22 +1,46 @@
 "use client";
-import Users from "@/utils/users";
+import { User } from "@/app/models/user";
 import { UserIcon } from "@heroicons/react/20/solid";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { saveAuthStateInLocalStorage } from "../isLoggedIn";
 
 const AuthComp = () => {
-  const users = Users;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const handleSubmit = () => {
-    const user = users.find((user) => user.username === username);
-    if (user && user.password === password) {
-      router.push("/v1/dashboard");
-    } else {
+  const handleSubmit = async () => {
+    try {
+      const params = new URLSearchParams();
+      params.append("username", username);
+      params.append("password", password);
+      const res = await fetch("/v3/api/login?" + params, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      res.json().then((data: User[]) => {
+        console.log(data);
+        if (data.some((user) => user.username === username)) {
+          saveAuthStateInLocalStorage(data[0]);
+          router.push("/v3/dashboard");
+        } else {
+          alert("Login failed");
+        }
+      }
+      ).catch((error) => {
+        console.error("An error occurred while log in the user", error);
+        alert("Login failed");
+      });
+    //  router.push("/dashboard");
+    } catch (error) {
+      console.error("An error occurred while log in the user", error);
       alert("Login failed");
     }
   };
@@ -26,7 +50,7 @@ const AuthComp = () => {
       <Image
         src={"/Vector 1.png"}
         alt="logo"
-        height={500}
+        height={300}
         width={200}
         className=""
       />
@@ -34,7 +58,7 @@ const AuthComp = () => {
         src={"/Vector 2.png"}
         alt="logo"
         height={200}
-        width={190}
+        width={90}
         className="absolute bottom-0"
       />
 
@@ -42,17 +66,17 @@ const AuthComp = () => {
         <div className="w-full bg-white rounded-lg md:mt-0 sm:max-w-md xl:p-0 border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <div className="flex flex-col justify-center m-auto items-center mb-10">
-              <Image src={"/logo.png"} alt="logo" height={400} width={100} />
+              <Image src={"/logo.png"} alt="logo" height={300} width={200} />
               <h1 className="text-lg text-gray-900">Sign in to your account</h1>
             </div>
             <form className="space-y-4 md:space-y-6">
               <div className="flex flex-row shadow-xl items-center p-2 rounded-full">
                 <UserIcon className="h-8 text-gray-500 ml-2"></UserIcon>
                 <input
-                  name="email"
-                  id="email"
+                  name="username"
+                  id="username"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5 "
-                  placeholder="•••••••"
+                  placeholder="Username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required={false}
@@ -64,7 +88,7 @@ const AuthComp = () => {
                   type="password"
                   name="password"
                   id="password"
-                  placeholder="Username"
+                  placeholder="••••••••"
                   className="bg-white text-gray-900 outline-none block w-full p-2.5"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -75,7 +99,7 @@ const AuthComp = () => {
                   href="#"
                   className="text-sm font-medium text-gray-500 hover:underline"
                 >
-                  Forgot passsword!
+                  Forgot password?
                 </a>
               </div>
               <div className="flex flex-row justify-end mt-20">
@@ -84,7 +108,7 @@ const AuthComp = () => {
                   className="flex flex-row w-fit items-center content-center"
                   onClick={handleSubmit}
                 >
-                  <h2 className="text-xl w-40 font-bold">Siign in</h2>
+                  <h2 className="text-xl w-40 font-bold">Sign in</h2>
                   <div
                     className="w-full text-white 
                         bg-gradient-to-r from-teal-400 to-teal-900  
@@ -95,17 +119,20 @@ const AuthComp = () => {
                 </button>
               </div>
               <p className="text-sm font-light text-gray-500 mb-50">
-                Dont you habe an acount?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline"
+                Don&#39;t you have an account?
+                <Link
+                  href="/v3/create"
+                  className="font-medium text-primary-600 hover:underline ml-1"
                 >
                   Create
-                </a>
+                </Link>
               </p>
             </form>
           </div>
         </div>
+      </div>
+      <div className="fixed top-0 right-0">
+          VERSION 3
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ const MainPage = ( )=>{
 
     const router = useRouter()
     useEffect(() => {
-       router.push('/v2')
+       router.push('/v3')
     }, []);
     return (
         <div>

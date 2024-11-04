@@ -13,3 +13,12 @@ export interface UserCreation {
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+
+export interface PasswordUpdate {
+    _id: string;
+    username: string;
+    oldPassword: string;
+    newPassword: string;
+    newPasswordRepeat: string;
+}
